@@ -29,6 +29,7 @@ jobs:
         with:
           node-version: 14.19.3
       - name: Add VS to path
+        if: runner.os == 'Windows'
         uses: microsoft/setup-msbuild@v1.1
       - name: Build Lens
         run: |
