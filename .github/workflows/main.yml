@@ -44,7 +44,7 @@ jobs:
                 mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb dist/OpenLens-${{ env.LENS_VERSION }}.deb
                 mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm dist/OpenLens-${{ env.LENS_VERSION }}.rpm
           else          
-                mv -v $i "dist/OpenLens Setup ${{ env.LENS_VERSION }}-latest.*.exe" dist/OpenLens-${{ env.LENS_VERSION }}.exe
+                mv dist/OpenLens*.exe" dist/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
         shell: bash
       - name: Release
