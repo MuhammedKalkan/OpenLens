@@ -18,8 +18,8 @@ jobs:
       - name: Export version to variable
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
-            set /P LENS_VERSION<= version
-            set GITHUB_ENV=LENS_VERSION=%LENS_VERSION%
+             export LENS_VERSION=$(cat version)
+             echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
           else
             export LENS_VERSION=$(cat version)
             echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
