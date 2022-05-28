@@ -28,11 +28,10 @@ jobs:
           cd lens
           git checkout v${{ env.LENS_VERSION }}
           make build
-          mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg dist/OpenLens-${{ env.LENS_VERSION }}.dmg
-          mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage dist/OpenLens-${{ env.LENS_VERSION }}.AppImage
-          mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb dist/OpenLens-${{ env.LENS_VERSION }}.deb
-          mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm dist/OpenLens-${{ env.LENS_VERSION }}.rpm
-          ls -la dist
+          [ -f *.dmg ] && mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg dist/OpenLens-${{ env.LENS_VERSION }}.dmg
+          [ -f *.AppImage ] && mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage dist/OpenLens-${{ env.LENS_VERSION }}.AppImage
+          [ -f *.deb ] && mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb dist/OpenLens-${{ env.LENS_VERSION }}.deb
+          [ -f *.rpm ] && mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm dist/OpenLens-${{ env.LENS_VERSION }}.rpm
       - name: Release
         uses: softprops/action-gh-release@v0.1.14
         with:
