@@ -28,14 +28,12 @@ jobs:
       - uses: actions/setup-node@v3        
         with:
           node-version: 14.19.3
-      - name: Add VS to path
-        if: runner.os == 'Windows'
-        uses: microsoft/setup-msbuild@v1.1
       - name: Build Lens
         run: |
           git clone https://github.com/lensapp/lens.git
           cd lens
           git checkout v${{ env.LENS_VERSION }}
+          npm install --g --production windows-build-tools
           make build
           if [ "$RUNNER_OS" == "macOS" ]; then
                 mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg dist/OpenLens-${{ env.LENS_VERSION }}.dmg
