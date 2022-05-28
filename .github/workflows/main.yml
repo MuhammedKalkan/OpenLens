@@ -33,7 +33,9 @@ jobs:
           git clone https://github.com/lensapp/lens.git
           cd lens
           git checkout v${{ env.LENS_VERSION }}
-          npm install --g --production windows-build-tools
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            npm install --g --production windows-build-tools
+          fi
           make build
           if [ "$RUNNER_OS" == "macOS" ]; then
                 mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg dist/OpenLens-${{ env.LENS_VERSION }}.dmg
