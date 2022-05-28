@@ -24,6 +24,7 @@ jobs:
             export LENS_VERSION=$(cat version)
             echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
           fi
+        shell: bash
       - uses: actions/setup-node@v3
         with:
           node-version: 14.19.3
@@ -42,6 +43,7 @@ jobs:
           else 
                 cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.exe dist/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
+        shell: bash
       - name: Release
         uses: softprops/action-gh-release@v0.1.14
         with:
