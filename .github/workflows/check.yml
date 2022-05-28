@@ -15,7 +15,9 @@ jobs:
           token: ${{ secrets.PAT }}
       - name: Get the latest version of Lens
         run: |
-          git tag | sort -V | tail -1 > version
+          git clone https://github.com/lensapp/lens.git
+          cd lens
+          git tag --sort=committerdate | grep -E '[0-9]' | tail -1 | cut -b 2-7 > version
           export LENS_VERSION=$(cat version)
           echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
       - name: Add & Commit
