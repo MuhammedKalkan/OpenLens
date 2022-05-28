@@ -7,7 +7,10 @@ on:
           
 jobs:
   build:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3.0.2
@@ -24,10 +27,17 @@ jobs:
           cd lens
           git checkout v${{ env.LENS_VERSION }}
           make build
-          mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.zip dist/OpenLens-${{ env.LENS_VERSION }}.zip
+          mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg dist/OpenLens-${{ env.LENS_VERSION }}.dmg
+          mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage dist/OpenLens-${{ env.LENS_VERSION }}.AppImage
+          mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb dist/OpenLens-${{ env.LENS_VERSION }}.deb
+          mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm dist/OpenLens-${{ env.LENS_VERSION }}.rpm
           ls -la dist
       - name: Release
         uses: softprops/action-gh-release@v0.1.14
         with:
           tag_name: v${{ env.LENS_VERSION }}
-          files: lens/dist/OpenLens-${{ env.LENS_VERSION }}.zip
+          files: | 
+              lens/dist/OpenLens-${{ env.LENS_VERSION }}.dmg
+              lens/dist/OpenLens-${{ env.LENS_VERSION }}.AppImage
+              lens/dist/OpenLens-${{ env.LENS_VERSION }}.deb
+              lens/dist/OpenLens-${{ env.LENS_VERSION }}.rpm
