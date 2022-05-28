@@ -17,8 +17,13 @@ jobs:
         uses: actions/checkout@v3.0.2
       - name: Export version to variable
         run: |
-          export LENS_VERSION=$(cat version)
-          echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            set /P LENS_VERSION<= version
+            set GITHUB_ENV=LENS_VERSION=%LENS_VERSION%
+          else
+            export LENS_VERSION=$(cat version)
+            echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
+          fi
       - uses: actions/setup-node@v3
         with:
           node-version: 14.19.3
@@ -35,7 +40,7 @@ jobs:
                 mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb dist/OpenLens-${{ env.LENS_VERSION }}.deb
                 mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm dist/OpenLens-${{ env.LENS_VERSION }}.rpm
           else 
-                mv dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.exe dist/OpenLens-${{ env.LENS_VERSION }}.exe
+                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.exe dist/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
       - name: Release
         uses: softprops/action-gh-release@v0.1.14
@@ -46,3 +51,4 @@ jobs:
               lens/dist/OpenLens-${{ env.LENS_VERSION }}.AppImage
               lens/dist/OpenLens-${{ env.LENS_VERSION }}.deb
               lens/dist/OpenLens-${{ env.LENS_VERSION }}.rpm
+              lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
