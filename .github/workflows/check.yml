@@ -21,6 +21,6 @@ jobs:
           export LENS_VERSION=$(cat version)
           echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
       - name: Add & Commit
-        uses: EndBug/add-and-commit@v9.0.0
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          message: 'Version updated to: ${{ env.LENS_VERSION }}'
+          commit_message: 'Version updated to: ${{ env.LENS_VERSION }}'
