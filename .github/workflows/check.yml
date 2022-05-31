@@ -15,12 +15,12 @@ jobs:
           token: ${{ secrets.PAT }}
       - name: Get the latest version of Lens
         run: |
-          git clone https://github.com/lensapp/lens.git
-          cd lens
-          git tag --sort=committerdate | grep -E '[0-9]' | tail -1 | cut -b 2-7 | head -n 1 > version
+          curl -s https://lens-binaries.s3.amazonaws.com/ide/latest-mac.yml |\
+            grep -o "version:.*-latest" | grep -oP "(\d+(:?\.\d+)+)" |\
+            head -n 1 > version
           export LENS_VERSION=$(cat version)
           echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
       - name: Add & Commit
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: EndBug/add-and-commit@v9.0.0
         with:
-          commit_message: 'Version updated to: ${{ env.LENS_VERSION }}'
+          message: 'Version updated to: ${{ env.LENS_VERSION }}'
