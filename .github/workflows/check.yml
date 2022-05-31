@@ -17,7 +17,7 @@ jobs:
         run: |
           git clone https://github.com/lensapp/lens.git
           cd lens
-          git tag --sort=committerdate | grep -E '[0-9]' | tail -1 | cut -b 2-7 > version
+          git tag --sort=committerdate | grep -E '[0-9]' | tail -1 | cut -b 2-7 | head -n 1 > version
           export LENS_VERSION=$(cat version)
           echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
       - name: Add & Commit
