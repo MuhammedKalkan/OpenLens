@@ -10,3 +10,4 @@ Go To Release to download your binary of type Linux , MacOS or Windows
 
 If you have trouble about not seeing pod logs, remove old config files / extensions remaining from old Lens app.
 
+**NOTE:** MacOS users will have to [manually trust the app](https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unidentified-developer-mh40616/mac), as it is currently not signed properly, see [Issue #1](https://github.com/MuhammedKalkan/OpenLens/issues/1)
