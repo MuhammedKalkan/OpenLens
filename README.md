@@ -4,6 +4,13 @@
 
 This is the Binary Build Repo for Lens Repository located here : https://github.com/lensapp/lens.git
 
-However, this build does not require you to log in. Download and use as is.
+However, this build does not require you to log in and includes only  open source part. Download and use as is.
 
 Go To Release to download your binary of type Linux , MacOS or Windows
+
+If you have trouble about not seeing pod logs, remove old config files remaining from old Lens app.
+
+Such as
+```
+rm -rf /Users/muhammed/Library/Application Support/OpenLens
+```
