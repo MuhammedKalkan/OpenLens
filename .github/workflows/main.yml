@@ -17,13 +17,8 @@ jobs:
         uses: actions/checkout@v3.0.2
       - name: Export version to variable
         run: |
-          if [ "$RUNNER_OS" == "Windows" ]; then
-             export LENS_VERSION=$(cat version)
-             echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
-          else
             export LENS_VERSION=$(cat version)
             echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
-          fi
         shell: bash
       - uses: actions/setup-node@v3        
         with:
