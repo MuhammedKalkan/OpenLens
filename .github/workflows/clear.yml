@@ -1,0 +1,24 @@
+name: Clear Latest
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+          
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - name: Clean Latest
+        uses: mknejp/delete-release-assets@v1
+        with:
+          token: ${{ github.token }}
+          tag: Latest
+          fail-if-no-assets: false
+          fail-if-no-release: false
+          assets: | 
+            *.*
