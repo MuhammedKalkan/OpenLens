@@ -10,6 +10,6 @@ Go To Release to download your binary of type Linux , MacOS or Windows
 
 If you have trouble about not seeing pod logs, remove old config files / extensions remaining from old Lens app.
 
-**NOTE:** Auto Updater is now live starting with every binaries downloaded from Latest tag or the releases that are build at the time starting with it.
+**NOTE:** Auto Updater is now live starting with every binary downloaded from Latest tag or the corresponding release assets.
 
 **NOTE:** MacOS users will have to [manually trust the app](https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unidentified-developer-mh40616/mac), as it is currently not signed properly, see [Issue #1](https://github.com/MuhammedKalkan/OpenLens/issues/1)
