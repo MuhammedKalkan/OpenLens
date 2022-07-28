@@ -46,6 +46,8 @@ jobs:
                 cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
           else
                 cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
+                winfilename=$(echo $filename | sed "s/OpenLens.Setup./OpenLens Setup /")
+                mv dist/OpenLens*.exe dist/$winfilename
           fi
         shell: bash
         working-directory: lens
