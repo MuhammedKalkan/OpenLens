@@ -68,7 +68,7 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             certutil -hashfile OpenLens-${{ env.LENS_VERSION }}.exe SHA256 > OpenLens-${{ env.LENS_VERSION }}.exe.sha256
           else
-            for filename in OpenLens-${{ env.LENS_VERSION }}.*; do shasum -a 256 ${filename} > ${filename}.sha256 ; done
+            for filename in OpenLens-${{ env.LENS_VERSION }}*; do shasum -a 256 ${filename} > ${filename}.sha256 ; done
           fi
         shell: bash
         working-directory: lens/releasefiles
@@ -77,11 +77,11 @@ jobs:
         with:
           tag_name: v${{ env.LENS_VERSION }}
           files: | 
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}-*.dmg
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.dmg
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}-*.zip
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.zip
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.*.sha256
       - name: Latest
