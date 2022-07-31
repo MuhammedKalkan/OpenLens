@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
-          
+
 jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest,windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
@@ -20,7 +20,7 @@ jobs:
             export LENS_VERSION=$(cat version)
             echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
         shell: bash
-      - uses: actions/setup-node@v3        
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.16.0
       - name: Update Lens
@@ -36,15 +36,29 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             choco install visualstudio2019buildtools visualstudio2019-workload-vctools
           fi
-          make build
           if [ "$RUNNER_OS" == "macOS" ]; then
-                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg releasefiles/OpenLens-${{ env.LENS_VERSION }}.dmg
-                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.zip releasefiles/OpenLens-${{ env.LENS_VERSION }}.zip
+                env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64" make build
+                for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg; do
+                    if [[ "$file" == *"arm64"* ]]; then
+                        echo cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.dmg
+                    else
+                        echo cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.dmg
+                    fi
+                done
+                for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.zip; do
+                    if [[ "$file" == *"arm64"* ]]; then
+                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.zip
+                    else
+                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.zip
+                    fi
+                done
           elif [ "$RUNNER_OS" == "Linux" ]; then
+                make build
                 cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
                 cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
                 cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
           else
+                make build
                 cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
         shell: bash
@@ -63,11 +77,11 @@ jobs:
         with:
           tag_name: v${{ env.LENS_VERSION }}
           files: | 
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.dmg
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}-*.dmg
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.zip
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}-*.zip
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.*.sha256
       - name: Latest
