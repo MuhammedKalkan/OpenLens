@@ -8,5 +8,12 @@ packagejson.build.publish = {
 };
 
 packagejson.build.win.artifactName = "OpenLens.Setup.${version}.${ext}";
+packagejson.build.mac.target = {
+    target: 'default',
+    arch: [
+      'x64',
+      'arm64'
+    ]
+  };
 
 fs.writeFileSync('package.json', JSON.stringify(packagejson));
