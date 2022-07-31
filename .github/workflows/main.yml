@@ -40,9 +40,9 @@ jobs:
                 env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64" make build
                 for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg; do
                     if [[ "$file" == *"arm64"* ]]; then
-                        echo cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.dmg
+                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.dmg
                     else
-                        echo cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.dmg
+                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.dmg
                     fi
                 done
                 for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.zip; do
@@ -83,7 +83,7 @@ jobs:
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.zip
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.*.sha256
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.sha256
       - name: Latest
         uses: softprops/action-gh-release@v0.1.14
         with:
