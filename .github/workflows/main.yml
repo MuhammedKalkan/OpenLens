@@ -9,7 +9,12 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest,windows-latest]
+        os: [ubuntu-latest, windows-latest]
+        ELECTRON_BUILDER_EXTRA_ARGS: [""]
+        include:
+          - os: macos-latest
+            ELECTRON_BUILDER_EXTRA_ARGS: --universal
+          
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
@@ -49,6 +54,8 @@ jobs:
           fi
         shell: bash
         working-directory: lens
+        env:
+          ELECTRON_BUILDER_EXTRA_ARGS: "${{ matrix.ELECTRON_BUILDER_EXTRA_ARGS }}"
       - name: Calculate SHA256 checksum
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
