@@ -38,37 +38,37 @@ jobs:
           fi
           if [ "$RUNNER_OS" == "macOS" ]; then
                 env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64" make build
-                for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg; do
+                for file in dist/OpenLens-Srokap-${{ env.LENS_VERSION }}-latest.*.dmg; do
                     if [[ "$file" == *"arm64"* ]]; then
-                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.dmg
+                        cp "$file" releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}-arm64.dmg
                     else
-                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.dmg
+                        cp "$file" releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}.dmg
                     fi
                 done
-                for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.zip; do
+                for file in dist/OpenLens-Srokap-${{ env.LENS_VERSION }}-latest.*.zip; do
                     if [[ "$file" == *"arm64"* ]]; then
-                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.zip
+                        cp "$file" releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}-arm64.zip
                     else
-                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.zip
+                        cp "$file" releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}.zip
                     fi
                 done
           elif [ "$RUNNER_OS" == "Linux" ]; then
                 make build
-                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
-                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
-                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
+                cp dist/OpenLens-Srokap-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}.AppImage
+                cp dist/OpenLens-Srokap-${{ env.LENS_VERSION }}-latest.*.amd64.deb releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}.deb
+                cp dist/OpenLens-Srokap-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}.rpm
           else
                 make build
-                cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
+                cp dist/OpenLens-Srokap*.exe releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}.exe
           fi
         shell: bash
         working-directory: lens
       - name: Calculate SHA256 checksum
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
-            certutil -hashfile OpenLens-${{ env.LENS_VERSION }}.exe SHA256 > OpenLens-${{ env.LENS_VERSION }}.exe.sha256
+            certutil -hashfile OpenLens-Srokap-${{ env.LENS_VERSION }}.exe SHA256 > OpenLens-Srokap-${{ env.LENS_VERSION }}.exe.sha256
           else
-            for filename in OpenLens-${{ env.LENS_VERSION }}*; do shasum -a 256 ${filename} > ${filename}.sha256 ; done
+            for filename in OpenLens-Srokap-${{ env.LENS_VERSION }}*; do shasum -a 256 ${filename} > ${filename}.sha256 ; done
           fi
         shell: bash
         working-directory: lens/releasefiles
@@ -77,22 +77,22 @@ jobs:
         with:
           tag_name: v${{ env.LENS_VERSION }}
           files: | 
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.dmg
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.zip
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
-              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.sha256
+              lens/releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}*.dmg
+              lens/releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}.AppImage
+              lens/releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}.deb
+              lens/releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}.rpm
+              lens/releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}*.zip
+              lens/releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}.exe
+              lens/releasefiles/OpenLens-Srokap-${{ env.LENS_VERSION }}*.sha256
       - name: Latest
         uses: softprops/action-gh-release@v0.1.14
         with:
           tag_name: Latest
           files: | 
-              lens/dist/OpenLens*.dmg
-              lens/dist/OpenLens*.AppImage
-              lens/dist/OpenLens*.deb
-              lens/dist/OpenLens*.rpm
-              lens/dist/OpenLens*.exe
-              lens/dist/OpenLens*.zip
+              lens/dist/OpenLens-Srokap*.dmg
+              lens/dist/OpenLens-Srokap*.AppImage
+              lens/dist/OpenLens-Srokap*.deb
+              lens/dist/OpenLens-Srokap*.rpm
+              lens/dist/OpenLens-Srokap*.exe
+              lens/dist/OpenLens-Srokap*.zip
               lens/dist/lates*.yml
