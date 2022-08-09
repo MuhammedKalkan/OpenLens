@@ -10,8 +10,6 @@ Go To Release to download your binary of type Linux , MacOS or Windows
 
 If you have trouble about not seeing pod logs, remove old config files / extensions remaining from old Lens app.
 
-**NOTE:** Please see https://github.com/MuhammedKalkan/OpenLens/discussions/19 to contribute to certificates discussion
-
 **NOTE:** Auto Updater is now live starting with every binary downloaded from Latest tag or the corresponding release assets.
 
 **NOTE:** For M1 Mac users, arm64 builds currently needs a terminal command in order to run correctly 
