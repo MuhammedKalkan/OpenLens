@@ -71,9 +71,9 @@ jobs:
       - name: Calculate SHA256 checksum
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
-            certutil -hashfile OpenLens-${{ env.LENS_VERSION }}.exe SHA256 > OpenLens-${{ env.LENS_VERSION }}.exe.sha256
+            certutil -hashfile OpenLens-${{ env.LENS_VERSION }}.exe SHA256 | tee OpenLens-${{ env.LENS_VERSION }}.exe.sha256
           else
-            for filename in OpenLens-${{ env.LENS_VERSION }}*; do shasum -a 256 ${filename} > ${filename}.sha256 ; done
+            for filename in OpenLens-${{ env.LENS_VERSION }}*; do shasum -a 256 ${filename} | tee ${filename}.sha256 ; done
           fi
         shell: bash
         working-directory: lens/releasefiles
