@@ -64,6 +64,7 @@ jobs:
         shell: bash
         working-directory: lens
         env:
+          APPBUNDLEID: "io.kontena.lens-app"
           APPLEID: ${{ secrets.APPLEID }}
           APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
           CSC_LINK: ${{ secrets.CSC_LINK }}
