@@ -13,11 +13,3 @@ If you have trouble about not seeing pod logs, remove old config files / extensi
 **NOTE:** You can sponsor certificates from the button or link at the right 
 
 **NOTE:** Auto Updater is now live starting with every binary downloaded from Latest tag or the corresponding release assets.
-
-**NOTE:** For M1 Mac users, arm64 builds currently needs a terminal command in order to run correctly 
-
-`sudo xattr -r -d com.apple.quarantine "/Applications/OpenLens.app"`
-
-Please see https://github.com/MuhammedKalkan/OpenLens/issues/18
-
-**NOTE:** MacOS users will have to [manually trust the app](https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unidentified-developer-mh40616/mac), as it is currently not signed properly, see [Issue #1](https://github.com/MuhammedKalkan/OpenLens/issues/1)
