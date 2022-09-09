@@ -53,13 +53,10 @@ jobs:
                     fi
                 done
           elif [ "$RUNNER_OS" == "Linux" ]; then
-                env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64" make build
+                make build
                 cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
                 cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
                 cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
-                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.arm64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.AppImage
-                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.arm64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.deb
-                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.aarch64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.rpm
           else
                 # Disable code sign on windows
                 unset CSC_LINK
