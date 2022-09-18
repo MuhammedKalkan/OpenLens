@@ -84,7 +84,7 @@ jobs:
         working-directory: lens/releasefiles
 
       - uses: actions/upload-artifact@v3
-        if: github.ref != 'refs/heads/master'
+        if: github.ref != 'refs/heads/main'
         with:
           name: OpenLens-${{ matrix.os }}
           retention-days: 5
@@ -99,7 +99,7 @@ jobs:
         
       - name: Release
         uses: softprops/action-gh-release@v0.1.14
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         with:
           tag_name: v${{ env.LENS_VERSION }}
           files: | 
@@ -112,7 +112,7 @@ jobs:
               lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.sha256
       - name: Latest
         uses: softprops/action-gh-release@v0.1.14
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         with:
           tag_name: Latest
           files: | 
