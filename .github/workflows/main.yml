@@ -24,6 +24,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.16.0
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6
       - name: Update Lens
         run: |
           git clone https://github.com/lensapp/lens.git
@@ -62,7 +65,8 @@ jobs:
               fi
             done
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            export USE_SYSTEM_FPM=true
+            gem install fpm
+            env USE_SYSTEM_FPM=true
             env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64" make build
             cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
             cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
@@ -85,9 +89,6 @@ jobs:
           APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-
-      - run: df -h
-        if: always()
 
       - name: Calculate SHA256 checksum
         run: |
