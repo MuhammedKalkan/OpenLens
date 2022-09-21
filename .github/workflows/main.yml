@@ -84,6 +84,10 @@ jobs:
           APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+
+      - run: df -h
+        if: always()
+
       - name: Calculate SHA256 checksum
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
