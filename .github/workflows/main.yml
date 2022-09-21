@@ -38,6 +38,14 @@ jobs:
             choco install visualstudio2019buildtools visualstudio2019-workload-vctools
           fi
           if [ "$RUNNER_OS" == "macOS" ]; then
+            if [ "${CSC_LINK}" = "" ]; then
+              unset CSC_LINK
+            fi
+            
+            if [ "${CSC_KEY_PASSWORD}" = "" ]; then
+              unset CSC_KEY_PASSWORD
+            fi
+          
             env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64 --config.dmg.sign=false" make build
             for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg; do
               if [[ "$file" == *"arm64"* ]]; then
