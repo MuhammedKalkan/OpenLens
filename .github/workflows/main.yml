@@ -24,9 +24,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.16.0
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.0'
       - name: Update Lens
         run: |
           git clone https://github.com/lensapp/lens.git
