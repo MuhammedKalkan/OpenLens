@@ -62,7 +62,7 @@ jobs:
               fi
             done
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64" make build
+            env ELECTRON_BUILDER_EXTRA_ARGS="--x64 --arm64" make build
             cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
             cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
             cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
