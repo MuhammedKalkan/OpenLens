@@ -38,43 +38,32 @@ jobs:
             choco install visualstudio2019buildtools visualstudio2019-workload-vctools
           fi
           if [ "$RUNNER_OS" == "macOS" ]; then
-            if [ "${CSC_LINK}" = "" ]; then
-              unset CSC_LINK
-            fi
-            
-            if [ "${CSC_KEY_PASSWORD}" = "" ]; then
-              unset CSC_KEY_PASSWORD
-            fi
-          
-            env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64 --config.dmg.sign=false" make build
-            for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg; do
-              if [[ "$file" == *"arm64"* ]]; then
-                cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.dmg
-              else
-                cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.dmg
-              fi
-            done
-            for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.zip; do
-              if [[ "$file" == *"arm64"* ]]; then
-                cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.zip
-              else
-                cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.zip
-              fi
-            done
+                env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64 --config.dmg.sign=false" make build
+                for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg; do
+                    if [[ "$file" == *"arm64"* ]]; then
+                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.dmg
+                    else
+                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.dmg
+                    fi
+                done
+                for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.zip; do
+                    if [[ "$file" == *"arm64"* ]]; then
+                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.zip
+                    else
+                        cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.zip
+                    fi
+                done
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            env ELECTRON_BUILDER_EXTRA_ARGS="--x64 --arm64" make build
-            cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
-            cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
-            cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
-            cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.arm64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.AppImage
-            cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.arm64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.deb
-            cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.aarch64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.rpm
+                make build
+                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
+                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
+                cp dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
           else
-            # Disable code sign on windows
-            unset CSC_LINK
-            unset CSC_KEY_PASSWORD
-            make build
-            cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
+                # Disable code sign on windows
+                unset CSC_LINK
+                unset CSC_KEY_PASSWORD
+                make build
+                cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
         shell: bash
         working-directory: lens
@@ -84,7 +73,6 @@ jobs:
           APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-
       - name: Calculate SHA256 checksum
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
@@ -100,38 +88,38 @@ jobs:
         with:
           name: OpenLens-${{ matrix.os }}
           retention-days: 5
-          path: |
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.dmg
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.AppImage
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.deb
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.rpm
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.zip
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.sha256
-
+          path: | 
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.dmg
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.zip
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.sha256
+        
       - name: Release
         uses: softprops/action-gh-release@v0.1.14
         if: github.ref == 'refs/heads/main'
         with:
           tag_name: v${{ env.LENS_VERSION }}
           files: | 
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.dmg
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.AppImage
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.deb
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.rpm
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.zip
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.sha256
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.dmg
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.zip
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
+              lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.sha256
       - name: Latest
         uses: softprops/action-gh-release@v0.1.14
         if: github.ref == 'refs/heads/main'
         with:
           tag_name: Latest
           files: | 
-            lens/dist/OpenLens*.dmg
-            lens/dist/OpenLens*.AppImage
-            lens/dist/OpenLens*.deb
-            lens/dist/OpenLens*.rpm
-            lens/dist/OpenLens*.exe
-            lens/dist/OpenLens*.zip
-            lens/dist/lates*.yml
+              lens/dist/OpenLens*.dmg
+              lens/dist/OpenLens*.AppImage
+              lens/dist/OpenLens*.deb
+              lens/dist/OpenLens*.rpm
+              lens/dist/OpenLens*.exe
+              lens/dist/OpenLens*.zip
+              lens/dist/lates*.yml
