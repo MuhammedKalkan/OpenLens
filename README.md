@@ -32,8 +32,6 @@ Go to [Releases](https://github.com/MuhammedKalkan/OpenLens/releases) and downlo
 ```
 brew install --cask openlens
 ```
-### Linux
-todo
 ### Windows
 ```
 scoop bucket add extras
