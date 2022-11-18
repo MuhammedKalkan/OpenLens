@@ -49,14 +49,14 @@ jobs:
             fi
           
             env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64 --config.dmg.sign=false" make build
-            for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.dmg; do
+            for file in dist/OpenLens-${{ env.LENS_VERSION }}.dmg; do
               if [[ "$file" == *"arm64"* ]]; then
                 cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.dmg
               else
                 cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.dmg
               fi
             done
-            for file in dist/OpenLens-${{ env.LENS_VERSION }}-latest.*.zip; do
+            for file in dist/OpenLens-${{ env.LENS_VERSION }}.zip; do
               if [[ "$file" == *"arm64"* ]]; then
                 cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.zip
               else
