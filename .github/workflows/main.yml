@@ -73,8 +73,8 @@ jobs:
             cp dist/OpenLens-${{ env.LENS_VERSION }}.aarch64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.rpm
           else
             # Disable code sign on windows
-            unset CSC_LINK
-            unset CSC_KEY_PASSWORD
+            set CSC_LINK=${{ env.WIN_CSC_LINK }}
+            set CSC_KEY_PASSWORD=${{ env.WIN_CSC_KEY_PASSWORD }}
             make build
             cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
@@ -86,6 +86,8 @@ jobs:
           APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
 
       - name: Calculate SHA256 checksum
         run: |
