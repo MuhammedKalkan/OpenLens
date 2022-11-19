@@ -72,7 +72,6 @@ jobs:
             cp dist/OpenLens-${{ env.LENS_VERSION }}.arm64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.deb
             cp dist/OpenLens-${{ env.LENS_VERSION }}.aarch64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.rpm
           else
- 
             set CSC_LINK=${{ env.CSC_LINK_WIN }}
             set CSC_KEY_PASSWORD=${{ env.CSC_KEY_PASSWORD_WIN }}
             make build
@@ -88,6 +87,7 @@ jobs:
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
           CSC_LINK_WIN: ${{ secrets.CSC_LINK_WIN }}
           CSC_KEY_PASSWORD_WIN: ${{ secrets.CSC_KEY_PASSWORD_WIN }}
+          CSC_FOR_PULL_REQUEST: true
 
       - name: Calculate SHA256 checksum
         run: |
