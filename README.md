@@ -37,3 +37,10 @@ brew install --cask openlens
 scoop bucket add extras
 scoop install openlens
 ```
+
+## Thanks
+Big Thanks to
+[Ebby Peter](https://github.com/ebbypeter)
+,
+[Xaver Lohmüller](https://github.com/xavierLowmiller)
+and those who all supperted to raise funds, for their contributions in signing the app for the community
