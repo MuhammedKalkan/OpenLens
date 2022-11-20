@@ -3,7 +3,7 @@
 [![Build Lens](https://github.com/MuhammedKalkan/OpenLens/actions/workflows/main.yml/badge.svg)](https://github.com/MuhammedKalkan/OpenLens/actions/workflows/main.yml)
 
 ##  Build Repo Only
-This is repo **only provides binaries** for the OpenLens repo. For software issues regarding OpenLens or the Lens IDE, go to the [Lens repo](https://github.com/lensapp/lens/issues) and open an issue there.
+This is repo **only provides signed binaries** for the OpenLens repo. For software issues regarding OpenLens or the Lens IDE, go to the [Lens repo](https://github.com/lensapp/lens/issues) and open an issue there.
 
 ## Overview
 
