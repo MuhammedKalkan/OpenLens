@@ -95,7 +95,7 @@ jobs:
             for filename in OpenLens-${{ env.LENS_VERSION }}*; do shasum -a 256 ${filename} | tee ${filename}.sha256 ; done
           fi
         shell: bash
-        working-directory: lens/releasefiles
+        working-directory: lens/dist
 
       - uses: actions/upload-artifact@v3
         if: github.ref != 'refs/heads/main'
@@ -103,13 +103,13 @@ jobs:
           name: OpenLens-${{ matrix.os }}
           retention-days: 5
           path: |
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.dmg
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.AppImage
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.deb
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.rpm
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.zip
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.sha256
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.dmg
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.AppImage
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.deb
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.rpm
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.zip
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.sha256
 
       - name: Release
         uses: softprops/action-gh-release@v0.1.14
@@ -117,13 +117,13 @@ jobs:
         with:
           tag_name: v${{ env.LENS_VERSION }}
           files: | 
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.dmg
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.AppImage
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.deb
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.rpm
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.zip
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
-            lens/releasefiles/OpenLens-${{ env.LENS_VERSION }}*.sha256
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.dmg
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.AppImage
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.deb
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.rpm
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.zip
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.sha256
       - name: Latest
         uses: softprops/action-gh-release@v0.1.14
         if: github.ref == 'refs/heads/main'
