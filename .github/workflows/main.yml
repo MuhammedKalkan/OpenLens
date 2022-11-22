@@ -85,8 +85,8 @@ jobs:
           CSC_KEY_PASSWORD: ${{ runner.os == 'macos' && secrets.CSC_KEY_PASSWORD || secrets.CSC_KEY_PASSWORD_WIN}}
           CSC_LINK_WIN: ${{ secrets.CSC_LINK_WIN }}
           CSC_KEY_PASSWORD_WIN: ${{ secrets.CSC_KEY_PASSWORD_WIN }}
-          WIN_CSC_LINK: ${{ secrets.CSC_LINK_WIN }}
-          WIN_CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD_WIN }}
+          WIN_CSC_LINK: ""
+          WIN_CSC_KEY_PASSWORD: ""
           CSC_FOR_PULL_REQUEST: true
 
       - name: Calculate SHA256 checksum
