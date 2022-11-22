@@ -74,6 +74,7 @@ jobs:
           else
             make build
             cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
+            cp dist/OpenLens*.exe dist/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
         shell: bash
         working-directory: lens
