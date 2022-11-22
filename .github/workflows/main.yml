@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 360
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v2.5.0
       - name: Export version to variable
         run: |
             export LENS_VERSION=$(cat version)
@@ -72,8 +72,6 @@ jobs:
             cp dist/OpenLens-${{ env.LENS_VERSION }}.arm64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.deb
             cp dist/OpenLens-${{ env.LENS_VERSION }}.aarch64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.rpm
           else
-            unset WIN_CSC_LINK
-            unset WIN_CSC_KEY_PASSWORD
             make build
             cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
@@ -87,6 +85,8 @@ jobs:
           CSC_KEY_PASSWORD: ${{ runner.os == 'macos' && secrets.CSC_KEY_PASSWORD || secrets.CSC_KEY_PASSWORD_WIN}}
           CSC_LINK_WIN: ${{ secrets.CSC_LINK_WIN }}
           CSC_KEY_PASSWORD_WIN: ${{ secrets.CSC_KEY_PASSWORD_WIN }}
+          WIN_CSC_LINK: ${{ secrets.CSC_LINK_WIN }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD_WIN }}
           CSC_FOR_PULL_REQUEST: true
 
       - name: Calculate SHA256 checksum
