@@ -131,10 +131,11 @@ jobs:
         with:
           tag_name: Latest
           files: | 
-            lens/dist/OpenLens*.dmg
-            lens/dist/OpenLens*.AppImage
-            lens/dist/OpenLens*.deb
-            lens/dist/OpenLens*.rpm
-            lens/dist/OpenLens*.exe
-            lens/dist/OpenLens*.zip
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.dmg
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.AppImage
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.deb
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.rpm
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.zip
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
+            lens/dist/OpenLens-${{ env.LENS_VERSION }}*.sha256
             lens/dist/lates*.yml
