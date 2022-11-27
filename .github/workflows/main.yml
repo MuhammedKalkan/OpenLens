@@ -112,11 +112,14 @@ jobs:
             lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.sha256
 
+      - name: Generate Changelog
+        run: curl -s https://api.github.com/repos/lensapp/lens/releases/latest | jq -r 'select(.prerelease == false) | .body[0:]'" > ${{ github.workspace }}-CHANGELOG.txt
       - name: Release
         uses: softprops/action-gh-release@v0.1.14
         if: github.ref == 'refs/heads/main'
         with:
           tag_name: v${{ env.LENS_VERSION }}
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: | 
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.dmg
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.AppImage
