@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 360
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.5.0
+        uses: actions/checkout@v3.1.0
       - name: Export version to variable
         run: |
             export LENS_VERSION=$(cat version)
@@ -115,7 +115,7 @@ jobs:
       - name: Generate Changelog
         run: curl -s https://api.github.com/repos/lensapp/lens/releases/latest | jq -r 'select(.prerelease == false) | .body[0:]' > ${{ github.workspace }}-CHANGELOG.txt
       - name: Release
-        uses: softprops/action-gh-release@v0.1.14
+        uses: softprops/action-gh-release@v0.1.15
         if: github.ref == 'refs/heads/main'
         with:
           tag_name: v${{ env.LENS_VERSION }}
@@ -129,7 +129,7 @@ jobs:
             lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.sha256
       - name: Latest
-        uses: softprops/action-gh-release@v0.1.14
+        uses: softprops/action-gh-release@v0.1.15
         if: github.ref == 'refs/heads/main'
         with:
           tag_name: Latest
