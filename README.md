@@ -33,10 +33,17 @@ Go to [Releases](https://github.com/MuhammedKalkan/OpenLens/releases) and downlo
 brew install --cask openlens
 ```
 ### Windows
+
+#### Scoop
 ```
 scoop bucket add extras
 scoop install openlens
 ```
+#### Winget
+```
+winget install openlens
+```
+
 
 ## Thanks
 Big Thanks to
