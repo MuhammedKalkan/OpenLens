@@ -75,8 +75,6 @@ jobs:
             make build
             cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
             cp dist/OpenLens*.exe dist/OpenLens-${{ env.LENS_VERSION }}.exe
-            cp dist/OpenLens*.msi releasefiles/OpenLens-${{ env.LENS_VERSION }}.msi
-            cp dist/OpenLens*.msi dist/OpenLens-${{ env.LENS_VERSION }}.msi
           fi
         shell: bash
         working-directory: lens
@@ -96,7 +94,6 @@ jobs:
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
             certutil -hashfile OpenLens-${{ env.LENS_VERSION }}.exe SHA256 | tee OpenLens-${{ env.LENS_VERSION }}.exe.sha256
-            certutil -hashfile OpenLens-${{ env.LENS_VERSION }}.msi SHA256 | tee OpenLens-${{ env.LENS_VERSION }}.msi.sha256
           else
             for filename in OpenLens-${{ env.LENS_VERSION }}*; do shasum -a 256 ${filename} | tee ${filename}.sha256 ; done
           fi
@@ -115,7 +112,6 @@ jobs:
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.rpm
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.zip
             lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
-            lens/dist/OpenLens-${{ env.LENS_VERSION }}.msi
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.sha256
 
       - name: Generate Changelog
@@ -133,7 +129,6 @@ jobs:
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.rpm
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.zip
             lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
-            lens/dist/OpenLens-${{ env.LENS_VERSION }}.msi
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.sha256
       - name: Latest
         uses: softprops/action-gh-release@v0.1.14
@@ -147,5 +142,4 @@ jobs:
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.rpm
             lens/dist/OpenLens-${{ env.LENS_VERSION }}*.zip
             lens/dist/OpenLens.Setup.${{ env.LENS_VERSION }}.exe
-            lens/dist/OpenLens.Setup.${{ env.LENS_VERSION }}.msi
             lens/dist/lates*.yml
