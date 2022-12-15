@@ -72,7 +72,7 @@ jobs:
             cp dist/OpenLens-${{ env.LENS_VERSION }}.arm64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.deb
             cp dist/OpenLens-${{ env.LENS_VERSION }}.aarch64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.rpm
           else
-            echo $CSC_LINK > ./CSC_LINK
+            echo $CSC_LINK |base64 -d > ./CSC_LINK
             export CSC_LINK=./CSC_LINK
             export CSC_LINK_WIN=./CSC_LINK
             export WIN_CSC_LINK=./CSC_LINK
