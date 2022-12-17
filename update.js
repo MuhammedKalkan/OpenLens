@@ -8,5 +8,13 @@ packagejson.build.publish = [{
 }];
 
 packagejson.build.win.artifactName = "OpenLens.Setup.${version}.${ext}";
+packagejson.build.win.target = ["nsis", "msi"];
+packagejson.build.msi = {
+    oneClick: true,
+    perMachine: false,
+    createDesktopShortcut: false,
+    createStartMenuShortcut: true,
+    additionalWixArgs: ['-sval']
+};
 
 fs.writeFileSync('package.json', JSON.stringify(packagejson));
