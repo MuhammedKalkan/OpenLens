@@ -10,14 +10,13 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@v3.0.2
         with:
           token: ${{ secrets.PAT }}
       - name: Get the latest version of Lens
         run: |
-          curl -s https://api.github.com/repos/lensapp/lens/releases/latest | jq -r 'select(.prerelease == false) | .tag_name[1:]' > version
-          export LENS_VERSION=$(cat version)
-          echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
+          curl -s https://api.github.com/repos/lensapp/lens/releases | jq -r '[.[] | select(.prerelease == false)][0] | .tag_name[1:]' > version
+          echo "LENS_VERSION=$(cat version)" >> $GITHUB_ENV
       - name: Add & Commit
         uses: EndBug/add-and-commit@v9.1.1
         with:
