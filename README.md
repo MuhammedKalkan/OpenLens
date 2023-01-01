@@ -5,6 +5,11 @@
 ##  Build Repo Only
 This repo **ONLY PROVIDES SIGNED BINARIES AND DOES NOT ALTER SOURCE CODE** for the OpenLens repo. For software issues regarding OpenLens or the Lens IDE, go to the [Lens repo](https://github.com/lensapp/lens/issues) and open an issue there.
 
+## Extensions
+
+Starting with 6.3.0 some extensions are removed from Lens. To install these most used extensions simply type **@alebcay/openlens-node-pod-menu** into the Extensions UI in OpenLens Settings page and it should install automatically.
+For sources please refer [here](https://www.npmjs.com/package/@alebcay/openlens-node-pod-menu)
+
 ## Overview
 
 This is the Binary Build Repo for the [Lens repository](https://github.com/lensapp/lens.git) aka **OpenLens**. This build only includes the open source part of the Lens IDE and does not require login. This repo was created due to lensapp/lens#5444.
