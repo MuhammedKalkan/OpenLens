@@ -37,6 +37,12 @@ Go to [Releases](https://github.com/MuhammedKalkan/OpenLens/releases) and downlo
 ```
 brew install --cask openlens
 ```
+
+### Linux
+Download and install appropriate package
+(`.rpm`, `.deb` or `.AppImage`)
+and install based on available package manager.
+
 ### Windows
 
 #### Scoop
