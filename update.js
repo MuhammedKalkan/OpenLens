@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-var packagejson = require('./package.json');
+var packagejson = require('./packages/open-lens/package.json');
 
 packagejson.build.publish = [{
     url: "https://github.com/MuhammedKalkan/OpenLens/releases/download/Latest",
