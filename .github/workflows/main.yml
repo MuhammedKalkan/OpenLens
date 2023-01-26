@@ -48,7 +48,7 @@ jobs:
               unset CSC_KEY_PASSWORD
             fi
           
-            env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64 --config.dmg.sign=false" make build
+            env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64 --config.dmg.sign=false" npm run build
             for file in dist/OpenLens-${{ env.LENS_VERSION }}.dmg; do
               if [[ "$file" == *"arm64"* ]]; then
                 cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.dmg
@@ -64,7 +64,7 @@ jobs:
               fi
             done
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            env ELECTRON_BUILDER_EXTRA_ARGS="--x64 --arm64" make build
+            env ELECTRON_BUILDER_EXTRA_ARGS="--x64 --arm64" npm run build
             cp dist/OpenLens-${{ env.LENS_VERSION }}.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
             cp dist/OpenLens-${{ env.LENS_VERSION }}.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
             cp dist/OpenLens-${{ env.LENS_VERSION }}.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
@@ -72,7 +72,7 @@ jobs:
             cp dist/OpenLens-${{ env.LENS_VERSION }}.arm64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.deb
             cp dist/OpenLens-${{ env.LENS_VERSION }}.aarch64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.rpm
           else
-            make build
+            npm run build
             cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
             cp dist/OpenLens*.exe dist/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
