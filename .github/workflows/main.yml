@@ -126,7 +126,7 @@ jobs:
       - name: Generate Changelog
         run: curl -s https://api.github.com/repos/lensapp/lens/releases/latest | jq -r 'select(.prerelease == false) | .body[0:]' > ${{ github.workspace }}-CHANGELOG.txt
       - name: Release
-        uses: softprops/action-gh-release@v0.1.14
+        uses: softprops/action-gh-release@v0.1.15
         if: github.ref == 'refs/heads/main'
         with:
           tag_name: v${{ env.LENS_VERSION }}
@@ -140,7 +140,7 @@ jobs:
             lens/packages/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
             lens/packages/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.sha256
       - name: Latest
-        uses: softprops/action-gh-release@v0.1.14
+        uses: softprops/action-gh-release@v0.1.15
         if: github.ref == 'refs/heads/main'
         with:
           tag_name: Latest
