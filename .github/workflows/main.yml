@@ -36,7 +36,6 @@ jobs:
       - name: Patch Upstream Lens
         run: |
           node update.js
-          cd lens
       - name: Build Lens
         run: |
           mkdir releasefiles
