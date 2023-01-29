@@ -151,4 +151,4 @@ jobs:
             lens/packages/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.rpm
             lens/packages/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.zip
             lens/packages/open-lens/dist/OpenLens.Setup.${{ env.LENS_VERSION }}.exe
-            lens/dist/lates*.yml
+            lens/packages/open-lens/dist/lates*.yml
