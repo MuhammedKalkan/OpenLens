@@ -72,7 +72,6 @@ jobs:
             yarn
             yarn run build
             yarn run build:app
-            ls packages/open-lens/dist/
             cp packages/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
             cp packages/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
             cp packages/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
