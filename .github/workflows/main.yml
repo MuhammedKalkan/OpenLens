@@ -108,7 +108,7 @@ jobs:
             for filename in OpenLens-${{ env.LENS_VERSION }}*; do shasum -a 256 ${filename} | tee ${filename}.sha256 ; done
           fi
         shell: bash
-        working-directory: lens/dist
+        working-directory: lens/packages/open-lens/dist
 
       - uses: actions/upload-artifact@v3
         if: github.ref != 'refs/heads/main'
