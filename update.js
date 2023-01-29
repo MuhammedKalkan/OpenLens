@@ -9,4 +9,4 @@ packagejson.build.publish = [{
 
 packagejson.build.win.artifactName = "OpenLens.Setup.${version}.${ext}";
 
-fs.writeFileSync('package.json', JSON.stringify(packagejson));
+fs.writeFileSync('./packages/open-lens/package.json', JSON.stringify(packagejson));

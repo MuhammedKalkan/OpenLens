@@ -16,8 +16,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 360
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3.2.0
+      - name: Checkout OpenLens
+        uses: actions/checkout@v3
       - name: Export version to variable
         run: |
             export LENS_VERSION=$(cat version)
@@ -26,12 +26,17 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.16.0
-      - name: Update Lens
+      - name: Checkout Upstream Lens
+        uses: actions/checkout@v3
+        with:
+          repository: lensapp/lens
+          path: lens
+          ref: v${{ env.LENS_VERSION }}
+          fetch-depth: 1
+      - name: Patch Upstream Lens
         run: |
-          git clone https://github.com/lensapp/lens.git
           cp update.js lens/update.js
           cd lens
-          git checkout v${{ env.LENS_VERSION }}
           node update.js
       - name: Build Lens
         run: |
@@ -47,8 +52,8 @@ jobs:
             if [ "${CSC_KEY_PASSWORD}" = "" ]; then
               unset CSC_KEY_PASSWORD
             fi
-            npm install
-            env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64 --config.dmg.sign=false" npm run build
+            yarn
+            env ELECTRON_BUILDER_EXTRA_ARGS="--arm64 --x64 --config.dmg.sign=false" yarn run build
             for file in dist/OpenLens-${{ env.LENS_VERSION }}.dmg; do
               if [[ "$file" == *"arm64"* ]]; then
                 cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.dmg
@@ -64,8 +69,8 @@ jobs:
               fi
             done
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            npm install
-            env ELECTRON_BUILDER_EXTRA_ARGS="--x64 --arm64" npm run build
+            yarn
+            env ELECTRON_BUILDER_EXTRA_ARGS="--x64 --arm64" yarn run build
             cp dist/OpenLens-${{ env.LENS_VERSION }}.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
             cp dist/OpenLens-${{ env.LENS_VERSION }}.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
             cp dist/OpenLens-${{ env.LENS_VERSION }}.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
@@ -73,8 +78,8 @@ jobs:
             cp dist/OpenLens-${{ env.LENS_VERSION }}.arm64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.deb
             cp dist/OpenLens-${{ env.LENS_VERSION }}.aarch64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.rpm
           else
-            npm install
-            npm run build
+            yarn
+            yarn run build
             cp dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
             cp dist/OpenLens*.exe dist/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
