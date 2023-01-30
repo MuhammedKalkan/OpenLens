@@ -54,7 +54,7 @@ scoop install openlens
 ```
 winget install openlens
 ```
-### Chocolatey
+#### Chocolatey
 ```
 choco install -y openlens
 ```
