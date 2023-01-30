@@ -59,7 +59,7 @@ winget install openlens
 choco install -y openlens
 ```
 
-For alpha builds:
+For alpha/beta builds:
 ```
 choco install -y openlens --pre
 ```
