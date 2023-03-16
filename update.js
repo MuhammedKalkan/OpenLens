@@ -15,3 +15,10 @@ if (process.platform != "win32") {
 }
 
 fs.writeFileSync('./lens/packages/open-lens/package.json', JSON.stringify(packagejson));
+
+
+let npmrc = fs.readFileSync('./lens/.npmrc','utf-8');
+npmrc = npmrc.replace("disturl \"","disturl = \"")
+npmrc = npmrc.replace("target \"","target = \"")
+npmrc = npmrc.replace("runtime \"","runtime = \"")
+fs.writeFileSync('./lens/.npmrc',npmrc)
