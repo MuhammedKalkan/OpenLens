@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-var packagejson = require('./lens/packages/open-lens/package.json');
+var packagejson = require('./lens/open-lens/package.json');
 
 packagejson.build.publish = [{
     url: "https://github.com/MuhammedKalkan/OpenLens/releases/download/Latest",
@@ -14,7 +14,7 @@ if (process.platform != "win32") {
     packagejson.scripts['build:app'] = "electron-builder --publish onTag --x64 --arm64";
 }
 
-fs.writeFileSync('./lens/packages/open-lens/package.json', JSON.stringify(packagejson));
+fs.writeFileSync('./lens/open-lens/package.json', JSON.stringify(packagejson));
 
 
 let npmrc = fs.readFileSync('./lens/.npmrc','utf-8');
