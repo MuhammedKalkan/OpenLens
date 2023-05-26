@@ -22,6 +22,8 @@ jobs:
         run: |
           export LENS_VERSION=$(cat version)
           echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
+          export DOWNLOAD_ALL_ARCHITECTURES="true"
+          echo "DOWNLOAD_ALL_ARCHITECTURES=$DOWNLOAD_ALL_ARCHITECTURES" >> $GITHUB_ENV
         shell: bash
       - uses: actions/setup-node@v3
         with:
