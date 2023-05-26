@@ -43,6 +43,7 @@ jobs:
           mkdir releasefiles
           if [ "$RUNNER_OS" == "Windows" ]; then
             choco install visualstudio2019buildtools visualstudio2019-workload-vctools
+             echo "DOWNLOAD_ALL_ARCHITECTURES=" >> $GITHUB_ENV
           fi
           if [ "$RUNNER_OS" == "macOS" ]; then
             if [ "${CSC_LINK}" = "" ]; then
