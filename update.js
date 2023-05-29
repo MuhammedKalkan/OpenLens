@@ -13,7 +13,6 @@ if (process.platform != "win32") {
     // build both x86_64 and arm64 for Linux and Darwin
     packagejson.scripts['build:app'] = "electron-builder --publish onTag --x64 --arm64";
 }
-packagejson.engines['node'] = ">=16";
 fs.writeFileSync('./lens/open-lens/package.json', JSON.stringify(packagejson));
 
 
