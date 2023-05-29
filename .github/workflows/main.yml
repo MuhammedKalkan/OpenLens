@@ -52,6 +52,7 @@ jobs:
             fi
             echo "DOWNLOAD_ALL_ARCHITECTURES=true" >> $GITHUB_ENV
             yarn run all:install
+            ./node_modules/.bin/electron-rebuild
             yarn run build
             yarn run build:app
             for file in open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.dmg; do
@@ -71,6 +72,7 @@ jobs:
           elif [ "$RUNNER_OS" == "Linux" ]; then
             echo "DOWNLOAD_ALL_ARCHITECTURES=true" >> $GITHUB_ENV
             yarn run all:install
+            ./node_modules/.bin/electron-rebuild
             yarn run build
             yarn run build:app
             cp open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
@@ -81,10 +83,11 @@ jobs:
             cp open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.aarch64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.rpm
           else
             yarn run all:install
+            ./node_modules/.bin/electron-rebuild.cmd
             yarn run build
             yarn run build:app
             cp open-lens/dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
-            cp open-lens/dist/OpenLens*.exe packages/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
+            cp open-lens/dist/OpenLens*.exe open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
         shell: bash
         working-directory: lens
