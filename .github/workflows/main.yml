@@ -50,6 +50,7 @@ jobs:
             if [ "${CSC_KEY_PASSWORD}" = "" ]; then
               unset CSC_KEY_PASSWORD
             fi
+            echo "DOWNLOAD_ALL_ARCHITECTURES=true" >> $GITHUB_ENV
             yarn run all:install
             yarn run build
             yarn run build:app
@@ -68,6 +69,7 @@ jobs:
               fi
             done
           elif [ "$RUNNER_OS" == "Linux" ]; then
+            echo "DOWNLOAD_ALL_ARCHITECTURES=true" >> $GITHUB_ENV
             yarn run all:install
             yarn run build
             yarn run build:app
