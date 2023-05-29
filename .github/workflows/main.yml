@@ -84,7 +84,7 @@ jobs:
             yarn run build
             yarn run build:app
             cp open-lens/dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
-            cp open-lens/dist/OpenLens*.exe packages/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
+            cp open-lens/dist/OpenLens*.exe open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
           fi
         shell: bash
         working-directory: lens
