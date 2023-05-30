@@ -22,6 +22,7 @@ jobs:
         run: |
           export LENS_VERSION=$(cat version)
           echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
+          echo "BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
         shell: bash
       - uses: actions/setup-node@v3
         with:
@@ -38,7 +39,6 @@ jobs:
           node update.js
       - name: Build Lens
         run: |
-          mkdir releasefiles
           if [ "$RUNNER_OS" == "Windows" ]; then
             choco install visualstudio2019buildtools visualstudio2019-workload-vctools
           fi
@@ -58,34 +58,12 @@ jobs:
             fi
             
             npx nx run open-lens:build:app --x64 --arm64
-          
-            for file in open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.dmg; do
-              if [[ "$file" == *"arm64"* ]]; then
-                cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.dmg
-              else
-                cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.dmg
-              fi
-            done
-            for file in open-lens/dist/OpenLens-${{ env.LENS_VERSION }}-mac.zip; do
-              if [[ "$file" == *"arm64"* ]]; then
-                cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}-arm64.zip
-              else
-                cp "$file" releasefiles/OpenLens-${{ env.LENS_VERSION }}.zip
-              fi
-            done
           elif [ "$RUNNER_OS" == "Linux" ]; then
             npx nx run open-lens:build:app --x64 --arm64
-            cp open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.x86_64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.AppImage
-            cp open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.amd64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.deb
-            cp open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.x86_64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.rpm
-            cp open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.arm64.AppImage releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.AppImage
-            cp open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.arm64.deb releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.deb
-            cp open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.aarch64.rpm releasefiles/OpenLens-${{ env.LENS_VERSION }}.arm64.rpm
           else
             unset DOWNLOAD_ALL_ARCHITECTURES
             npx nx run open-lens:build:app
-            cp open-lens/dist/OpenLens*.exe releasefiles/OpenLens-${{ env.LENS_VERSION }}.exe
-            cp open-lens/dist/OpenLens*.exe open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
+            cp open-lens/dist/OpenLens*.exe open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}.exe
           fi
         shell: bash
         working-directory: lens
@@ -105,9 +83,9 @@ jobs:
       - name: Calculate SHA256 checksum
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
-            certutil -hashfile OpenLens-${{ env.LENS_VERSION }}.exe SHA256 | tee OpenLens-${{ env.LENS_VERSION }}.exe.sha256
+            certutil -hashfile OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}.exe SHA256 | tee OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}.exe.sha256
           else
-            for filename in OpenLens-${{ env.LENS_VERSION }}*; do shasum -a 256 ${filename} | tee ${filename}.sha256 ; done
+            for filename in OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*; do shasum -a 256 ${filename} | tee ${filename}.sha256 ; done
           fi
         shell: bash
         working-directory: lens/open-lens/dist
@@ -118,13 +96,13 @@ jobs:
           name: OpenLens-${{ matrix.os }}
           retention-days: 5
           path: |
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.dmg
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.AppImage
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.deb
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.rpm
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.zip
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.sha256
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.dmg
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.AppImage
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.deb
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.rpm
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.zip
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}.exe
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.sha256
 
       - name: Generate Changelog
         run: curl -s https://api.github.com/repos/lensapp/lens/releases/latest | jq -r 'select(.prerelease == false) | .body[0:]' > ${{ github.workspace }}-CHANGELOG.txt
@@ -132,26 +110,26 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         if: github.ref == 'refs/heads/main'
         with:
-          tag_name: v${{ env.LENS_VERSION }}
+          tag_name: v${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}
           body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.dmg
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.AppImage
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.deb
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.rpm
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.zip
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.exe
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.sha256
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.dmg
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.AppImage
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.deb
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.rpm
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.zip
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}.exe
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.sha256
       - name: Latest
         uses: softprops/action-gh-release@v0.1.15
         if: github.ref == 'refs/heads/main'
         with:
           tag_name: Latest
           files: |
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.dmg
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.AppImage
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.deb
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.rpm
-            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}*.zip
-            lens/open-lens/dist/OpenLens.Setup.${{ env.LENS_VERSION }}.exe
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.dmg
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.AppImage
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.deb
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.rpm
+            lens/open-lens/dist/OpenLens-${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}*.zip
+            lens/open-lens/dist/OpenLens.Setup.${{ env.LENS_VERSION }}.${{ env.BUILD_NUMBER }}.exe
             lens/open-lens/dist/lates*.yml
