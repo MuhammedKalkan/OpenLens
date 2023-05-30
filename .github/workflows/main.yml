@@ -36,6 +36,8 @@ jobs:
       - name: Patch Upstream Lens
         run: |
           node update.js
+        env:
+          BUILD_NUMBER: ${{ github.run_number }}
       - name: Build Lens
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
