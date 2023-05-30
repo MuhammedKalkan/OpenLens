@@ -13,4 +13,6 @@ packageJsonOpenLens.build.linux.artifactName = packageJsonOpenLens.build.linux.a
 packageJsonOpenLens.build.win.artifactName = "OpenLens.Setup.${buildVersion}.${ext}";
 packageJsonOpenLens.build.npmRebuild = true;
 
+console.log(`Set build version: ${packageJsonOpenLens.version}`)
+
 fs.writeFileSync('./lens/open-lens/package.json', JSON.stringify(packageJsonOpenLens, null, 2));
