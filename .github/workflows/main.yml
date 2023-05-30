@@ -101,6 +101,7 @@ jobs:
           WIN_CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD_WIN }}
           CSC_FOR_PULL_REQUEST: true
           DOWNLOAD_ALL_ARCHITECTURES: true
+          BUILD_NUMBER: ${{ github.run_id }}
 
       - name: Calculate SHA256 checksum
         run: |
