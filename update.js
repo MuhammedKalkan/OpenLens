@@ -12,6 +12,12 @@ packageJsonOpenLens.build.artifactName = "${productName}-${buildVersion}-${arch}
 packageJsonOpenLens.build.linux.artifactName = packageJsonOpenLens.build.linux.artifactName.replace("${version}", "${buildVersion}");
 packageJsonOpenLens.build.win.artifactName = "OpenLens.Setup.${buildVersion}.${ext}";
 packageJsonOpenLens.build.npmRebuild = true;
+packageJsonOpenLens.copyright = [
+    packageJsonOpenLens.copyright,
+    '',
+    'Binary application builds by MuhammedKalkan/OpenLens',
+    'Muhammed Kalkan, Jan-Otto Kröpke, Ebby Peter, Xaver Lohmüller'
+].join("\r\n")
 
 console.log(`Set build version: ${packageJsonOpenLens.version}`)
 
