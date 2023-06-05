@@ -15,8 +15,8 @@ packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,
     '',
-    'Binary application builds by MuhammedKalkan/OpenLens',
-    'Muhammed Kalkan, Jan-Otto Kröpke, Ebby Peter, Xaver Lohmüller'
+    'Binary application builds @ MuhammedKalkan/OpenLens',
+    'by Muhammed Kalkan, Jan-Otto Kröpke, Ebby Peter, Xaver Lohmüller'
 ].join("\r\n")
 
 console.log(`Set build version: ${packageJsonOpenLens.version}`)
