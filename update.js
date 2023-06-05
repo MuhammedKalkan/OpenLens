@@ -7,10 +7,7 @@ packageJsonOpenLens.build.publish = [{
     provider: "generic"
 }];
 
-packageJsonOpenLens.version = `${packageJsonOpenLens.version}+${process.env.BUILD_NUMBER}`;
-packageJsonOpenLens.build.artifactName = "${productName}-${buildVersion}-${arch}-${os}.${ext}";
-packageJsonOpenLens.build.linux.artifactName = packageJsonOpenLens.build.linux.artifactName.replace("${version}", "${buildVersion}");
-packageJsonOpenLens.build.win.artifactName = "OpenLens.Setup.${buildVersion}.${ext}";
+packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_NUMBER}`;
 packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,
