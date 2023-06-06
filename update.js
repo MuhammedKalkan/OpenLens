@@ -9,7 +9,7 @@ packageJsonOpenLens.build.publish = [{
 
 packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_NUMBER}`;
 packageJsonOpenLens.build.npmRebuild = true;
-packageJsonOpenLens.scripts["build:app"] = packageJsonOpenLens.scripts["build:app"].replace("onTag", "always");
+packageJsonOpenLens.build.detectUpdateChannel = false;
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,
     '',
