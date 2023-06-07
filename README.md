@@ -7,7 +7,7 @@ This repo **ONLY PROVIDES SIGNED BINARIES AND DOES NOT ALTER SOURCE CODE** for t
 
 ## Extensions
 
-Starting with 6.3.0 some extensions are removed from Lens. To install these most used extensions simply type **@alebcay/openlens-node-pod-menu** into the Extensions UI in OpenLens Settings page and it should install automatically.
+Starting with 6.3.0 some extensions are removed from Lens. To install these most used extensions simply type **@alebcay/openlens-node-pod-menu** into the Extensions page in the OpenLens menu and it should install automatically. If you see the extension rapidly toggling between `enabled` and `disabled`, restart OpenLens and enable it in the Extension page.
 For sources please refer [here](https://www.npmjs.com/package/@alebcay/openlens-node-pod-menu)
 
 ## Overview
