@@ -57,6 +57,7 @@ jobs:
             npx nx run open-lens:build:app --win nsis msi portable
           else
             npx nx run open-lens:build:app --x64 --arm64
+            find . -name '*pty.node' -print0 | xargs -0 file
           fi
           
           rm -f open-lens/dist/*blockmap{,*}
