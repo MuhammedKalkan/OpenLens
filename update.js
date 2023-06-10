@@ -9,7 +9,6 @@ packageJsonOpenLens.build.publish = [{
 
 packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_NUMBER}`;
 packageJsonOpenLens.build.npmRebuild = true;
-packageJsonOpenLens.build.nodeGypRebuild = true;
 packageJsonOpenLens.build.detectUpdateChannel = false;
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,
