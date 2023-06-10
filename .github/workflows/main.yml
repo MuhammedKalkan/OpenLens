@@ -82,6 +82,7 @@ jobs:
           WIN_CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD_WIN }}
           CSC_FOR_PULL_REQUEST: true
           DOWNLOAD_ALL_ARCHITECTURES: ${{ runner.os != 'Windows' }}
+          DEBUG: electron-rebuild
 
       - name: Calculate SHA256 checksum
         run: |-
