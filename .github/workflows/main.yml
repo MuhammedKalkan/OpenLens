@@ -16,14 +16,14 @@ jobs:
         os: [ubuntu-20.04, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 360
+    env:
+      BUILD_ID: ${{ github.run_number }}
     steps:
       - name: Checkout OpenLens
         uses: actions/checkout@v3
+
       - name: Export version to variable
-        run: |
-          export LENS_VERSION=$(cat version)
-          echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
-          echo "BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
+        run: echo "LENS_VERSION=$(cat version)" >> $GITHUB_ENV
         shell: bash
 
       - uses: actions/setup-node@v3
@@ -39,8 +39,7 @@ jobs:
           fetch-depth: 1
 
       - name: Patch Upstream Lens
-        run: |
-          node update.js
+        run: node update.js
 
       - name: Build Lens
         run: |
