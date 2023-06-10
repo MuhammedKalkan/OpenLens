@@ -11,7 +11,7 @@ packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUIL
 packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.build.detectUpdateChannel = false;
 
-delete packageJsonOpenLens.build.postinstall;
+delete packageJsonOpenLens.scripts.postinstall;
 
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,
