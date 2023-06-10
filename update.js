@@ -10,6 +10,9 @@ packageJsonOpenLens.build.publish = [{
 packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_NUMBER}`;
 packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.build.detectUpdateChannel = false;
+
+delete packageJsonOpenLens.build.postinstall;
+
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,
     '',
