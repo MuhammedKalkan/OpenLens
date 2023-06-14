@@ -12,6 +12,7 @@ packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.build.detectUpdateChannel = false;
 
 delete packageJsonOpenLens.scripts.postinstall;
+delete packageJsonOpenLens.devDependencies["@electron/rebuild"];
 
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,

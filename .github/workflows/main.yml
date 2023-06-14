@@ -56,11 +56,7 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             npx nx run open-lens:build:app --win nsis msi portable
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            npx nx run open-lens:build:app --x64
-            rm -rf node_modules
-            npm run all:install -- --arch=arm64
-            npx nx reset
-            npx nx run open-lens:build:app --arm64
+            npx nx run open-lens:build:app --x64 --arm64
             find . -name '*pty.node' -print0 | xargs -0 file
           else
             npx nx run open-lens:build:app --x64 --arm64
@@ -82,7 +78,6 @@ jobs:
           WIN_CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD_WIN }}
           CSC_FOR_PULL_REQUEST: true
           DOWNLOAD_ALL_ARCHITECTURES: ${{ runner.os != 'Windows' }}
-          DEBUG: electron-rebuild
 
       - name: Calculate SHA256 checksum
         run: |-
