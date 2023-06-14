@@ -58,7 +58,7 @@ jobs:
           elif [ "$RUNNER_OS" == "Linux" ]; then
             npx nx run open-lens:build:app --x64
             rm -rf node_modules
-            npm run all:install
+            npm run all:install -- --arch=arm64
             npx nx reset
             npx nx run open-lens:build:app --arm64
             find . -name '*pty.node' -print0 | xargs -0 file
