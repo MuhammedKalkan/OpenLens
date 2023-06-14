@@ -44,9 +44,6 @@ jobs:
       - name: Build Lens
         run: |
           npm run all:install
-          # Avoid npm install from electron-builder
-          # ref: https://github.com/electron-userland/electron-builder/blob/80a3ae857b9305aff1774e1b2b932601af50231b/packages/app-builder-lib/src/util/yarn.ts#L11-L16
-          mkdir open-lens/node_modules
           
           if [ "${CSC_LINK}" = "" ] || [ "${CSC_KEY_PASSWORD}" = "" ]; then
             unset CSC_LINK
