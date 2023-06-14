@@ -9,7 +9,7 @@ packageJsonOpenLens.build.publish = [{
 }];
 
 packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_ID}`;
-packageJsonOpenLens.build.npmRebuild = os.platform() === 'darwin';
+packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.build.detectUpdateChannel = false;
 packageJsonOpenLens.devDependencies["electron-builder"] = "^24.4.0"
 
