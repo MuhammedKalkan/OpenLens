@@ -58,8 +58,9 @@ jobs:
           elif [ "$RUNNER_OS" == "Linux" ]; then
             npx nx run open-lens:build:app --x64
           
-            apt update && apt install g++-aarch64-linux-gnu -y  
-            export CXX=aarch64-linux-gnu-g++
+            sudo apt update
+            sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y  
+            export CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++
           
             npm run all:reinstall
             npx nx reset
