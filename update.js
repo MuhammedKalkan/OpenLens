@@ -1,5 +1,4 @@
 const fs = require('fs');
-const os = require('os');
 
 const packageJsonOpenLens = require('./lens/open-lens/package.json');
 
@@ -11,6 +10,8 @@ packageJsonOpenLens.build.publish = [{
 packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_ID}`;
 packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.build.detectUpdateChannel = false;
+
+delete packageJsonOpenLens.scripts.postinstall;
 
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,
