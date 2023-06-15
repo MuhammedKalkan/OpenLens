@@ -56,23 +56,12 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             npx nx run open-lens:build:app --win nsis msi portable
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            aarch64-linux-gnu-g++ --version
-            exit 1
-            cd open-lens
-            env npm_config_target_arch=arm64 npm_config_arch=arm64 npm rebuild --loglevel silly node-pty
-            find . -name '*pty.node' -print0 | xargs -0 file
-            env npm_config_target_arch=arm64 npm_config_arch=arm64 npx @electron/rebuild -f -a arm64
-            cd ..
-            find . -name '*pty.node' -print0 | xargs -0 file
-            exit 1
-            
-          
             npx nx run open-lens:build:app --x64
-            rm -rf node_modules
-            npm run all:install -- --arch=arm64
-            find . -name '*pty.node' -print0 | xargs -0 file
-            env npm_config_target_arch=arm64 npm_config_arch=arm64 npm rebuild --verbose node-pty@0.10.1
-            find . -name '*pty.node' -print0 | xargs -0 file
+          
+            apt update && apt install g++-aarch64-linux-gnu -y  
+            export CXX=aarch64-linux-gnu-g++
+          
+            npm run all:reinstall
             npx nx reset
             npx nx run open-lens:build:app --arm64
             find . -name '*pty.node' -print0 | xargs -0 file
