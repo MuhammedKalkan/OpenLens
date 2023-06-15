@@ -56,6 +56,8 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             npx nx run open-lens:build:app --win nsis msi portable
           elif [ "$RUNNER_OS" == "Linux" ]; then
+            aarch64-linux-gnu-g++ --version
+            exit 1
             cd open-lens
             env npm_config_target_arch=arm64 npm_config_arch=arm64 npm rebuild --loglevel silly node-pty
             find . -name '*pty.node' -print0 | xargs -0 file
