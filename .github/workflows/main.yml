@@ -11,7 +11,6 @@ on:
 jobs:
   build:
     strategy:
-      fail-fast: false
       matrix:
         os: [ubuntu-20.04, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
@@ -60,7 +59,7 @@ jobs:
           
             sudo apt update
             sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y  
-            export CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++
+            export CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ npm_config_target_arch=amd64 npm_config_arch=amd64
           
             npm run all:reinstall
             npx nx reset
