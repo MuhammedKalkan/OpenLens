@@ -12,7 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-20.04]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 360
     env:
@@ -55,13 +55,16 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             npx nx run open-lens:build:app --win nsis msi portable
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            npx nx run open-lens:build:app --x64
-          
             sudo apt update
-            sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y  
-            export CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ npm_config_target_arch=arm64 npm_config_arch=arm64
+            sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y          
+            export CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ npm_config_target_arch=arm64 npm_config_arch=arm64 
+            npx nx run open-lens:build:app --arm64
+            find . -name '*pty.node' -print0 | xargs -0 file
+            exit 1
           
-            npm run all:reinstall
+            
+          
+            env npm_config_target_arch=arm64 npm_config_arch=arm64 npm run all:reinstall
             npx nx reset
             npx nx run open-lens:build:app --arm64
             find . -name '*pty.node' -print0 | xargs -0 file
