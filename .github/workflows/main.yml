@@ -12,17 +12,17 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [ ubuntu-20.04, macos-latest, windows-latest ]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 360
+    env:
+      BUILD_ID: ${{ github.run_number }}
     steps:
       - name: Checkout OpenLens
         uses: actions/checkout@v3
+
       - name: Export version to variable
-        run: |
-          export LENS_VERSION=$(cat version)
-          echo "LENS_VERSION=$LENS_VERSION" >> $GITHUB_ENV
-          echo "BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
+        run: echo "LENS_VERSION=$(cat version)" >> $GITHUB_ENV
         shell: bash
 
       - uses: actions/setup-node@v3
@@ -38,15 +38,14 @@ jobs:
           fetch-depth: 1
 
       - name: Patch Upstream Lens
-        run: |
-          node update.js
+        run: node update.js
 
       - name: Build Lens
         run: |
           npm run all:install
           # Avoid npm install from electron-builder
           # ref: https://github.com/electron-userland/electron-builder/blob/80a3ae857b9305aff1774e1b2b932601af50231b/packages/app-builder-lib/src/util/yarn.ts#L11-L16
-          mkdir open-lens/node_modules
+          mkdir -p open-lens/node_modules
           
           if [ "${CSC_LINK}" = "" ] || [ "${CSC_KEY_PASSWORD}" = "" ]; then
             unset CSC_LINK
@@ -55,8 +54,21 @@ jobs:
           
           if [ "$RUNNER_OS" == "Windows" ]; then
             npx nx run open-lens:build:app --win nsis msi portable
+          elif [ "$RUNNER_OS" == "Linux" ]; then
+            npx nx run open-lens:build:app          
+            npm run all:reinstall
+            npx nx reset
+          
+            sudo apt update
+            sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y          
+            export CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++
+            mkdir -p open-lens/node_modules
+          
+            npx nx run open-lens:build:app --arm64
+            find . -name '*pty.node' -print0 | xargs -0 file
           else
             npx nx run open-lens:build:app --x64 --arm64
+            find . -name '*pty.node' -print0 | xargs -0 file
           fi
           
           rm -f open-lens/dist/*blockmap{,*}

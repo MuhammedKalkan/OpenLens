@@ -7,9 +7,12 @@ packageJsonOpenLens.build.publish = [{
     provider: "generic"
 }];
 
-packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_NUMBER}`;
+packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_ID}`;
 packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.build.detectUpdateChannel = false;
+
+delete packageJsonOpenLens.scripts.postinstall;
+
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,
     '',
