@@ -59,6 +59,8 @@ jobs:
             env npm_config_target_arch=arm64 npm_config_arch=arm64 npm rebuild --loglevel debug node-pty@0.10.1
             env npm_config_target_arch=arm64 npm_config_arch=arm64 npm rebuild -w open-lens --loglevel debug node-pty@0.10.1
             find . -name '*pty.node' -print0 | xargs -0 file
+            env npm_config_target_arch=arm64 npm_config_arch=arm64 npx @electron/rebuild -f
+            find . -name '*pty.node' -print0 | xargs -0 file
             env npm_config_target_arch=arm64 npm_config_arch=arm64 npx @electron/rebuild -f -a arm64
             find . -name '*pty.node' -print0 | xargs -0 file
             cd open-lens
