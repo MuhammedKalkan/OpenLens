@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-20.04]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 360
     env:
@@ -56,6 +56,15 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             npx nx run open-lens:build:app --win nsis msi portable
           elif [ "$RUNNER_OS" == "Linux" ]; then
+            env npm_config_target_arch=arm64 npm_config_arch=arm64 npm rebuild --verbose node-pty@0.10.1
+            find . -name '*pty.node' -print0 | xargs -0 file
+            env npm_config_target_arch=arm64 npm_config_arch=arm64 npx --yes --package npm@^9.6.7 npm rebuild --verbose node-pty@0.10.1
+            find . -name '*pty.node' -print0 | xargs -0 file
+            env npm_config_target_arch=arm64 npm_config_arch=arm64 npx @electro/rebuild -f -a amd64
+            find . -name '*pty.node' -print0 | xargs -0 file
+            exit 0
+            
+          
             npx nx run open-lens:build:app --x64
             rm -rf node_modules
             npm run all:install -- --arch=arm64
