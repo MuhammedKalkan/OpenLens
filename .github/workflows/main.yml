@@ -103,7 +103,7 @@ jobs:
         with:
           name: OpenLens-${{ matrix.os }}
           retention-days: 5
-          path: lens/open-lens/dist/OpenLens*${{ env.LENS_VERSION }}-${{ env.BUILD_NUMBER }}*.*
+          path: lens/open-lens/dist/OpenLens*${{ env.LENS_VERSION }}-${{ env.BUILD_ID }}*.*
 
       - name: Generate Changelog
         run: curl -s https://api.github.com/repos/lensapp/lens/releases/latest | jq -r 'select(.prerelease == false) | .body[0:]' > ${{ github.workspace }}-CHANGELOG.txt
@@ -112,9 +112,9 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         if: github.ref == 'refs/heads/main'
         with:
-          tag_name: v${{ env.LENS_VERSION }}-${{ env.BUILD_NUMBER }}
+          tag_name: v${{ env.LENS_VERSION }}-${{ env.BUILD_ID }}
           body_path: ${{ github.workspace }}-CHANGELOG.txt
-          files: lens/open-lens/dist/OpenLens*${{ env.LENS_VERSION }}-${{ env.BUILD_NUMBER }}*.*
+          files: lens/open-lens/dist/OpenLens*${{ env.LENS_VERSION }}-${{ env.BUILD_ID }}*.*
 
       - name: Latest
         uses: softprops/action-gh-release@v0.1.15
@@ -122,5 +122,5 @@ jobs:
         with:
           tag_name: Latest
           files: |
-            lens/open-lens/dist/OpenLens*${{ env.LENS_VERSION }}-${{ env.BUILD_NUMBER }}*.*
-            lens/open-lens/dist/lates*.yml
+            lens/open-lens/dist/OpenLens*${{ env.LENS_VERSION }}-${{ env.BUILD_ID }}*.*
+            #lens/open-lens/dist/lates*.yml
