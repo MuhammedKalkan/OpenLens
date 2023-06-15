@@ -42,7 +42,7 @@ jobs:
 
       - name: Build Lens
         run: |
-          npm run all:install
+          npm run all:install -- --arch=arm64
           # Avoid npm install from electron-builder
           # ref: https://github.com/electron-userland/electron-builder/blob/80a3ae857b9305aff1774e1b2b932601af50231b/packages/app-builder-lib/src/util/yarn.ts#L11-L16
           mkdir -p open-lens/node_modules
