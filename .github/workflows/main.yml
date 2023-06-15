@@ -56,14 +56,14 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             npx nx run open-lens:build:app --win nsis msi portable
           elif [ "$RUNNER_OS" == "Linux" ]; then
-            npx nx run open-lens:build:app --x64 --arm64
+            npx nx run open-lens:build:app --x64
             rm -rf node_modules
             npm run all:install -- --arch=arm64
             find . -name '*pty.node' -print0 | xargs -0 file
             env npm_config_target_arch=arm64 npm_config_arch=arm64 npm rebuild --verbose node-pty@0.10.1
             find . -name '*pty.node' -print0 | xargs -0 file
             npx nx reset
-            npx nx run open-lens:build:app 
+            npx nx run open-lens:build:app --arm64
             find . -name '*pty.node' -print0 | xargs -0 file
           else
             npx nx run open-lens:build:app --x64 --arm64
