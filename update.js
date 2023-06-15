@@ -13,7 +13,7 @@ packageJsonOpenLens.build.npmRebuild = os.platform() === 'darwin';
 packageJsonOpenLens.build.detectUpdateChannel = false;
 packageJsonOpenLens.devDependencies["electron-builder"] = "^24.4.0"
 
-packageJsonOpenLens.scripts.postinstall = "electron-builder install-app-deps"
+delete packageJsonOpenLens.scripts.postinstall;
 
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,
