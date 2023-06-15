@@ -11,7 +11,7 @@ packageJsonOpenLens.build.publish = [{
 packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_ID}`;
 packageJsonOpenLens.build.npmRebuild = os.platform() === 'darwin';
 packageJsonOpenLens.build.detectUpdateChannel = false;
-packageJsonOpenLens.devDependencies["electron-builder"] = "^24.6.0"
+packageJsonOpenLens.devDependencies["electron-builder"] = "^24.4.0"
 
 delete packageJsonOpenLens.scripts.postinstall;
 
