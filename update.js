@@ -10,6 +10,7 @@ packageJsonOpenLens.build.publish = [{
 packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_ID}`;
 packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.build.detectUpdateChannel = false;
+packageJsonOpenLens.devDependencies["electron-builder"] = "24.5.1";
 
 delete packageJsonOpenLens.scripts.postinstall;
 
