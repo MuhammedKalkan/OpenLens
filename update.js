@@ -10,6 +10,7 @@ packageJsonOpenLens.build.publish = [{
 packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUILD_ID}`;
 packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.build.detectUpdateChannel = false;
+packageJsonOpenLens.build.beforeBuild = '../../build-hooks/beforeBuild';
 
 delete packageJsonOpenLens.scripts.postinstall;
 
