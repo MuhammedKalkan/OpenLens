@@ -4,7 +4,6 @@ const archMap = {
 }
 
 module.exports = async (buildContext) => {
-    console.log(buildContext)
     if (buildContext.platform.name !== "linux") return true
 
     if (buildContext.arch in archMap) {
@@ -14,7 +13,5 @@ module.exports = async (buildContext) => {
         process.env.CC = "gcc"
         process.env.CXX = "g++"
     }
-
-    console.log(process.env.CXX)
     return true
 }
