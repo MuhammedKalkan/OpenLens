@@ -11,10 +11,8 @@ packageJsonOpenLens.version = `${packageJsonOpenLens.version}-${process.env.BUIL
 packageJsonOpenLens.build.npmRebuild = true;
 packageJsonOpenLens.build.detectUpdateChannel = false;
 packageJsonOpenLens.build.beforeBuild = '../../build-hooks/beforeBuild';
-//packageJsonOpenLens.devDependencies["electron-builder"] = "24.5.1";
-//packageJsonOpenLens.scripts.postinstall = "electron-builder install-app-deps"
 
-// delete packageJsonOpenLens.scripts.postinstall;
+delete packageJsonOpenLens.scripts.postinstall;
 
 packageJsonOpenLens.copyright = [
     packageJsonOpenLens.copyright,
