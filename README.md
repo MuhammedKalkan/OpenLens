@@ -43,6 +43,8 @@ Download and install appropriate package
 (`.rpm`, `.deb` or `.AppImage`)
 and install based on available package manager.
 
+Or download the tarball binary `.tar.gz` file and expand it to `/opt` for example.
+
 ### Windows
 
 #### Scoop

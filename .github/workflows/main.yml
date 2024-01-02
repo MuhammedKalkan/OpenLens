@@ -58,7 +58,7 @@ jobs:
             sudo apt update
             sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y
           
-            npx nx run open-lens:build:app --x64 --arm64
+            npx nx run open-lens:build:app --linux rpm deb tar.gz --x64 --arm64
             find . -name '*pty.node' -print0 | xargs -0 file
           else
             npx nx run open-lens:build:app --x64 --arm64
