@@ -1,3 +1,5 @@
+Lens Closed its source code. So please do not expect any more updates.
+
 # OpenLens Build Repo
 
 [![Build Lens](https://github.com/MuhammedKalkan/OpenLens/actions/workflows/main.yml/badge.svg)](https://github.com/MuhammedKalkan/OpenLens/actions/workflows/main.yml)
