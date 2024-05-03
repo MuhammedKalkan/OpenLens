@@ -1,4 +1,5 @@
-Lens Closed its source code. So please do not expect any more updates.
+> [!CAUTION]
+> Lens Closed its source code. So please do not expect any more updates.
 
 # OpenLens Build Repo
 
